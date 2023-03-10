@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 
 interface CategoryInfo {
@@ -25,8 +25,23 @@ export class AppController {
     return `${params.productId}}`;
   } */
 
+  @Get('/products-other')
+  getProdcutsOther(
+    @Query('limit') limit = 100,
+    @Query('offset') offset = 0,
+    @Query('brand') brand: string,
+  ) {
+    return `products: limit=> ${limit}, offset => ${offset}, brand => ${brand}`;
+  }
+
+  @Get('/products')
+  getProdcuts(@Query() params: any) {
+    const { limit, offset } = params;
+    return `products: limit=> ${limit}, offset => ${offset}`;
+  }
+
   @Get('/products/:productId')
-  getProdcuts(@Param('productId') productId: string) {
+  getProdcut(@Param('productId') productId: string) {
     return `${productId}`;
   }
 
