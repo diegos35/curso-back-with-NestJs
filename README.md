@@ -76,3 +76,5 @@ Nest is [MIT licensed](LICENSE).
 node --version
 npm i -g @nestjs/cli
 nest --version
+
+npm i class-validator class-transformer @nestjs/mapped-types
