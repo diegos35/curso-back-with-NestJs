@@ -7,6 +7,9 @@ import {
   Body,
   HttpStatus,
   Res,
+  Put,
+  Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { Response } from 'express';
 
@@ -38,8 +41,11 @@ export class ProductsController {
   }
 
   @Get('/:productId')
-  getProdcut(@Param('productId') productId: string) {
-    return `${productId}`;
+  @HttpCode(HttpStatus.ACCEPTED)
+  getOne(@Res() response: Response, @Param('productId') productId: string) {
+    response.status(200).send({
+      message: `${productId}`,
+    });
   }
 
   @Post()
@@ -56,5 +62,20 @@ export class ProductsController {
       message: 'Product created',
       product,
     });
+  }
+
+  @Put(':id')
+  update(@Param('id') id: number, @Body() payload: any) {
+    return {
+      id,
+      payload,
+    };
+  }
+
+  @Delete(':id')
+  delee(@Param('id') id: number) {
+    return {
+      id,
+    };
   }
 }
