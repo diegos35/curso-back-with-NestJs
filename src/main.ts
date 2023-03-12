@@ -3,7 +3,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // automatically remove atributes not defined Dto
+      forbidNonWhitelisted: true, //alert response
+    }),
+  );
   await app.listen(3000);
 }
 bootstrap();
