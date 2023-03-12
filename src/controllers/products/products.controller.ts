@@ -27,8 +27,8 @@ export class ProductsController {
     return `${params.productId}}`;
   } */
 
-  @Get('/other')
-  getProdcutsOther(
+  @Get('')
+  getProdcuts(
     @Query('limit') limit = 100,
     @Query('offset') offset = 0,
     @Query('brand') brand: string,
@@ -37,15 +37,17 @@ export class ProductsController {
     //return `products: limit=> ${limit}, offset => ${offset}, brand => ${brand}`;
   }
 
-  @Get('/filter')
-  getProdcuts(@Query() params: any) {
+  @Get('filter')
+  getProdcutFilter(@Query() params: any) {
     const { limit, offset } = params;
     return `products: limit=> ${limit}, offset => ${offset}`;
   }
 
   @Get('/:productId')
   @HttpCode(HttpStatus.ACCEPTED)
-  getOne(@Res() response: Response, @Param('productId') productId: string) {
+  getOne(
+    /* @Res() response: Response, */ @Param('productId') productId: string,
+  ) {
     /*  response.status(200).send({
       message: `${productId}`,
     }); */
