@@ -12,9 +12,11 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { ProductService } from '../../services/product.service';
 
 @Controller('products')
 export class ProductsController {
+  constructor(private productsService: ProductService) {}
   @Get('nuevo')
   newEndpoint() {
     return 'soy new endpoint';
@@ -31,7 +33,8 @@ export class ProductsController {
     @Query('offset') offset = 0,
     @Query('brand') brand: string,
   ) {
-    return `products: limit=> ${limit}, offset => ${offset}, brand => ${brand}`;
+    return this.productsService.findAll();
+    //return `products: limit=> ${limit}, offset => ${offset}, brand => ${brand}`;
   }
 
   @Get('/filter')
@@ -43,17 +46,19 @@ export class ProductsController {
   @Get('/:productId')
   @HttpCode(HttpStatus.ACCEPTED)
   getOne(@Res() response: Response, @Param('productId') productId: string) {
-    response.status(200).send({
+    /*  response.status(200).send({
       message: `${productId}`,
-    });
+    }); */
+    return this.productsService.findOne(+productId);
   }
 
   @Post()
   create(@Body() payload: any) {
-    return {
+    /*  return {
       message: 'accion crear',
       payload,
-    };
+    }; */
+    return this.productsService.create(payload);
   }
 
   @Post()
@@ -65,11 +70,12 @@ export class ProductsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
+  update(@Param('id') id: string, @Body() payload: any) {
+    /* return {
       id,
       payload,
-    };
+    }; */
+    return this.productsService.update(+id, payload);
   }
 
   @Delete(':id')
