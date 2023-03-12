@@ -34,4 +34,22 @@ export class ProductService {
     this.products.push(newProduct);
     return newProduct;
   }
+
+  update(id: number, payload: Product) {
+    const found = this.products.findIndex((item) => item.id === id);
+    console.log(found);
+    if (found === -1) throw new Error('Product not found');
+    this.products[found] = {
+      id: id,
+      ...payload,
+    };
+    return {
+      Message: 'Product updated',
+      Updated: this.products[found],
+    };
+  }
+
+  delete(id: number) {
+    this.products = this.products.filter((product) => product.id !== id);
+  }
 }
