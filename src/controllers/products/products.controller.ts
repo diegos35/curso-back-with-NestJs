@@ -1,4 +1,14 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Body,
+  HttpStatus,
+  Res,
+} from '@nestjs/common';
+import { Response } from 'express';
 
 @Controller('products')
 export class ProductsController {
@@ -30,5 +40,21 @@ export class ProductsController {
   @Get('/:productId')
   getProdcut(@Param('productId') productId: string) {
     return `${productId}`;
+  }
+
+  @Post()
+  create(@Body() payload: any) {
+    return {
+      message: 'accion crear',
+      payload,
+    };
+  }
+
+  @Post()
+  createTwo(@Res() res: Response, @Body() product: any) {
+    return res.status(HttpStatus.OK).json({
+      message: 'Product created',
+      product,
+    });
   }
 }
