@@ -81,9 +81,10 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  delee(@Param('id') id: number) {
-    return {
+  delee(@Param('id') id: string) {
+    /*  return {
       id,
-    };
+    }; */
+    this.productsService.remove(+id);
   }
 }
